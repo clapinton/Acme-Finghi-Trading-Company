@@ -1,3 +1,17 @@
 // Place all the styles related to the species controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.species-list-table {
+    text-align: center;
+  }
+.species-list-table th {
+  border-bottom: solid 1px black;
+}
+.species-list-table th, .species-list-table td {
+  width: 150px;
+  border-right: solid 1px black;
+}
+.species-list-table th:first-child, .species-list-table td:first-child {
+  border-left: solid 1px black;
+}
