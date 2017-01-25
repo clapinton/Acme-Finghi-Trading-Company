@@ -1,25 +1,3 @@
-  <style>
-    .species-list-table {
-      text-align: center;
-    }
-    .species-list-table th {
-      border-bottom: solid 1px black;
-    }
-    .species-list-table th, .species-list-table td {
-      width: 150px;
-      border-right: solid 1px black;
-    }
-    .species-list-table th:first-child, .species-list-table td:first-child {
-      border-left: solid 1px black;
-    }
-    .search-form button {
-      margin: 10px 0;
-    }
-    #species-input {
-      width: 250px;
-    }
-  </style>
-
     <form class="search-form">
       <input id="species-input" value="Error dolorem,Sint omnis"/>
       <select id="country-selector">
@@ -30,11 +8,13 @@
     </form>
 
     <table class="species-list-table">
-      <th>ID</th>
-      <th>Name</th>
-      <th>Latin Name</th>
-      <th>Country of Origin</th>
-      <th>Next Shipment Date</th>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Latin Name</th>
+        <th>Country of Origin</th>
+        <th>Next Shipment Date</th>
+      </tr>
     </table>
 
 
