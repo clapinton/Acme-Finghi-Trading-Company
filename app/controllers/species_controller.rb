@@ -1,0 +1,3 @@
+class SpeciesController < ApplicationController
+
+end

@@ -1,0 +1,132 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Species Search Result</title>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  </head>
+  <style>
+    .species-list-table {
+      text-align: center;
+    }
+    .species-list-table th {
+      border-bottom: solid 1px black;
+    }
+    .species-list-table th, .species-list-table td {
+      width: 150px;
+      border-right: solid 1px black;
+    }
+    .species-list-table th:first-child, .species-list-table td:first-child {
+      border-left: solid 1px black;
+    }
+    .search-form button {
+      margin: 10px 0;
+    }
+    #species-input {
+      width: 250px;
+    }
+  </style>
+  
+  <body>
+
+    <form class="search-form">
+      <input id="species-input" value="Error dolorem,Sint omnis"/>
+      <select id="country-selector">
+        <option selected=true>BV</option>
+      </select>
+      <br/>
+      <button>Search</button>
+    </form>
+
+    <table class="species-list-table">
+      <th>ID</th>
+      <th>Name</th>
+      <th>Latin Name</th>
+      <th>Country of Origin</th>
+      <th>Next Shipment Date</th>
+    </table>
+
+  </body>
+
+  <script>
+
+    //The following code uses ES5 and the jQuery library for quick implementation. React + Redux could also be a possibility.
+    //Re the shipment date constraint, I would prefer to add the logic to the back end (SQL), avoiding front end logic.
+    //But, since I don't know if the data will be used in other sections of the screen, I'll develop the logic here instead of Q4's SQL.
+    
+    function displayResults(res) {
+
+      //Helper for checking if should display shipment date. Returns the date or "-", ready to be printed.
+      function displayedShipmentDate(inventory, shipmentDate) {
+        var dateNow = new Date(); //This is today in milliseconds since Jan 1, 1970 
+        var dateOfNextShipment = Date.parse(shipmentDate); //Milliseconds between date and Jan 1, 1970
+
+        // Only displays the next shipment if the date is in the future and the inventory is 0.
+        if (inventory === 0 && dateOfNextShipment > dateNow) {
+          return shipmentDate;
+        } else {
+          return "-";
+        }
+      }
+
+      $(".species-item").remove(); //Remove previous results
+
+      Object.keys(res).map( function(speciesId) { //Map through each species, with speciesId being the object keys
+        var speciesItem = res[speciesId];
+        var speciesName = speciesItem.name;
+        var speciesLatinName = speciesItem.name;
+        var originCountry = speciesItem.country_name;
+        
+        //Check if next shipment date should be displayed
+        var inventoryCount = speciesItem.inventory_count;
+        var nextShipment = speciesItem.next_shipment_date;
+        var shipmentDate = displayedShipmentDate(inventoryCount, nextShipment);
+
+        //For each species, crete a new speciesLine and concat <td> to it. Lastly, append the var to the table.
+        //On ES6, would've used string interpolation.
+        var speciesLine = "<tr class='species-item'>";
+        speciesLine += '<td class="speciesInfo">' + speciesId + '</td>';
+        speciesLine += '<td class="speciesInfo">' + speciesName + '</td>';
+        speciesLine += '<td class="speciesInfo">' + speciesLatinName + '</td>';
+        speciesLine += '<td class="speciesInfo">' + originCountry + '</td>';
+        speciesLine += '<td class="speciesInfo">' + shipmentDate + '</td>';
+        speciesLine += '</tr>';
+
+        $(".species-list-table").append(speciesLine);
+
+      })
+    }
+
+    function querySpecies(speciesLatinNames, countryCode) {
+      var queryUrl = "api/search?species=" + speciesLatinNames.join(",") + "&country=" + countryCode;
+
+      $.ajax({
+        method: "GET",
+        url: queryUrl,
+        success: displayResults,
+        error: function(res) {alert("An error has occurred: " + res.status + " - " + res.statusText)}
+      });
+    }
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      var latinNames = e.target[0].value.split(",");
+      var country = e.target[1].value;
+
+      querySpecies(latinNames, country);
+    }
+
+    $(function() {
+      //Add event listener
+      $(".search-form").submit(handleSubmit);
+      
+      //Add country codes to drop down
+      codes=['BR',	'VG',	'IO',	'BN',	'BG',		'BF',	'BI',	'KH',	'CM',	'CA',	'CV',	'KY',	'CF',	'TD',	'CL',	'CN',	'HK', 'MO',	'CX',	'CC',	'CO',	'KM',	'CG',	'CD',	'CK',	'CR',	'CI',	'HR',	'CU',	'CY',	'CZ',	'DK',	'DJ',	'DM',	'DO']
+      codes.map( function(code) {
+        $("#country-selector").append("<option>" + code + "</option>");
+      })
+    })
+
+  </script>
+
+</html>
