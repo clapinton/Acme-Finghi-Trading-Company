@@ -1,6 +1,6 @@
 @all_species.each do |species|
-  json.set! species.id do
+  json.set! species.species_name do
+    json.id species.id
     json.latin_name species.species_latin_name
-    json.name species.species_name
   end
 end

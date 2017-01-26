@@ -1,29 +1,70 @@
-    <form class="search-form">
-      <input id="species-input" value="Error dolorem,Sint omnis"/>
-      <select id="country-selector">
-        <option selected=true>BV</option>
-      </select>
-      <br/>
-      <button>Search</button>
-    </form>
+<h1>jQuery</h1>
+    <main>
+      <form class="search-form">
+        <h2>Select one or more species:</h2>
+        <div class="species-selector">
+        </div>
+        <h2>From which country (optional):</h2>
+        <select id="country-selector">
+          <option selected=true value="-">-</option>
+        </select>
+        <br/>
+        <button>Search</button>
+      </form>
 
-    <table class="species-list-table">
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Latin Name</th>
-        <th>Country of Origin</th>
-        <th>Next Shipment Date</th>
-      </tr>
-    </table>
-
-
+      <div class="species-table-wrapper">
+        <table class="species-list-table">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Latin Name</th>
+            <th>Country of Origin</th>
+            <th>Next Shipment Date</th>
+          </tr>
+        </table>
+      </div>
+    </main>
   <script>
 
     //The following code uses ES5 and the jQuery library for quick implementation. React + Redux could also be a possibility.
     //Re the shipment date constraint, I would prefer to add the logic to the back end (SQL), avoiding front end logic.
     //But, since I don't know if the data will be used in other sections of the screen, I'll develop the logic here instead of Q4's SQL.
     
+    function getAllSpecies() {
+      var speciesList = $(".species-selector");
+      var populateCheckBoxes = function(res) {
+        var textToDisplay = "";
+        Object.keys(res).map( function(speciesName) {
+          textToDisplay = speciesName + " ("+res[speciesName].latin_name + ")";
+          speciesList.append("<label><input type='checkbox' name='species-list-item' value='"+res[speciesName].id+"'/>"+textToDisplay+"</label>");
+          speciesList.append("<br>");
+        })
+      }
+
+      $.ajax({
+        method: "GET",
+        url: 'api/species',
+        success: populateCheckBoxes,
+        error: function(res) {alert("An error has occurred: " + res.status + " - " + res.statusText)}
+      });
+    }
+
+    function getAllCountries() {
+      var countriesList = $("#country-selector");
+      var populateCountries = function(res) {
+        Object.keys(res).map( function(countryName) {
+          countriesList.append("<option value='"+res[countryName].code+"'>"+countryName+"</option>");
+        })
+      }
+
+      $.ajax({
+        method: "GET",
+        url: 'api/countries',
+        success: populateCountries,
+        error: function(res) {alert("An error has occurred: " + res.status + " - " + res.statusText)}
+      });
+    }
+
     function displayResults(res) {
 
       //Helper for checking if should display shipment date. Returns the date or "-", ready to be printed.
@@ -40,9 +81,9 @@
       }
 
       $(".species-item").remove(); //Remove previous results
-
-      Object.keys(res).map( function(speciesId) { //Map through each species, with speciesId being the object keys
-        var speciesItem = res[speciesId];
+      Object.keys(res).map( function(inventoryId) { //Map through each species, with inventoryId being the object keys
+        var speciesItem = res[inventoryId];
+        var speciesId = speciesItem.id;
         var speciesName = speciesItem.name;
         var speciesLatinName = speciesItem.name;
         var originCountry = speciesItem.country_name;
@@ -67,8 +108,8 @@
       })
     }
 
-    function querySpecies(speciesLatinNames, countryCode) {
-      var queryUrl = "api/search?species=" + speciesLatinNames.join(",") + "&country=" + countryCode;
+    function querySpecies(speciesIds, countryCode) {
+      var queryUrl = "api/search?species=" + speciesIds.join(",") + "&country=" + countryCode;
 
       $.ajax({
         method: "GET",
@@ -80,21 +121,25 @@
 
     function handleSubmit(e) {
       e.preventDefault();
-      var latinNames = e.target[0].value.split(",");
-      var country = e.target[1].value;
+      var checkboxes = document.getElementsByName("species-list-item");
+      var speciesIds = [];
+      for (i=0; i<checkboxes.length; i++) {
+        if (checkboxes[i].checked === true)  speciesIds.push(checkboxes[i].value);
+      }
+      var country = $("#country-selector").val();
 
-      querySpecies(latinNames, country);
+      querySpecies(speciesIds, country);
     }
 
     $(function() {
       //Add event listener
       $(".search-form").submit(handleSubmit);
+
+      //Populate the species checkbox list
+      getAllSpecies();
+      //Populate the countries selector
+      getAllCountries();
       
-      //Add country codes to drop down
-      codes=['BR',	'VG',	'IO',	'BN',	'BG',		'BF',	'BI',	'KH',	'CM',	'CA',	'CV',	'KY',	'CF',	'TD',	'CL',	'CN',	'HK', 'MO',	'CX',	'CC',	'CO',	'KM',	'CG',	'CD',	'CK',	'CR',	'CI',	'HR',	'CU',	'CY',	'CZ',	'DK',	'DJ',	'DM',	'DO']
-      codes.map( function(code) {
-        $("#country-selector").append("<option>" + code + "</option>");
-      })
     })
 
   </script>

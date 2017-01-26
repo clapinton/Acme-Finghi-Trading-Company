@@ -52,6 +52,7 @@ class SearchSpecies extends React.Component {
     const codes=['BV', 'BR',	'VG',	'IO',	'BN',	'BG',	'BF',	'BI',	'KH',	'CM',	'CA',	'CV',	'KY',	'CF',	'TD',	'CL',	'CN',	'HK', 'MO',	'CX',	'CC',	'CO',	'KM',	'CG',	'CD',	'CK',	'CR',	'CI',	'HR',	'CU',	'CY',	'CZ',	'DK',	'DJ',	'DM',	'DO'];
     return(
       <div>
+        <h1>jQuery</h1>
         <form className="search-form">
           <input id="species-input" value={this.state.speciesQuery} onChange={this.updateSpeciesQuery()}/>
           <select value={this.state.country} id="country-selector" onChange={this.updateCountry()}>
