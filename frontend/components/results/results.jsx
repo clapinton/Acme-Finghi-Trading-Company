@@ -29,7 +29,7 @@ class SpeciesResults extends React.Component {
   render() {
     let species = this.props.species;
     return(
-      <div>
+      <div className="species-table-wrapper">
         <table className="species-list-table">
         <tbody>
           <tr>
