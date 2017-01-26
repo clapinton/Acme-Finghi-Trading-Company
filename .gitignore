@@ -17,4 +17,9 @@ app/assets/javascripts/bundle*
 !/log/.keep
 /tmp
 
+# Ignore node_modules
 /node_modules
+
+# Ignore byebug log
+.byebug_history
+
