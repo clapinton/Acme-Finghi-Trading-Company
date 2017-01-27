@@ -104,6 +104,7 @@ def index
   country_query = params["country"] #If country is not present, it will return null
 
   @matched_species = searchSpecies(species_query, country_query) #Will be passed to the search View for rendering
+  # No need to call the render method here since the rails controller implicitely does it as the last command.
 end
 ```
 ```js
@@ -136,7 +137,7 @@ shipment date is in the future. Use whatever CSS you feel.
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Species Search Result</title>
-		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   </head>
   <style>
     body {
@@ -238,6 +239,7 @@ shipment date is in the future. Use whatever CSS you feel.
     //Re the shipment date constraint, I would prefer to add the logic to the back end (SQL), avoiding front end logic.
     //But, since I don't know if the data will be used in other sections of the screen, I'll develop the logic here instead of Q4's SQL.
     
+    //GETs the /api/species endpoint to populate the species checkboxes
     function getAllSpecies() {
       var speciesList = $(".species-selector");
       var populateCheckBoxes = function(res) {
@@ -257,6 +259,7 @@ shipment date is in the future. Use whatever CSS you feel.
       });
     }
 
+    //GETs the /api/countries endpoint to populate the countries dropdown
     function getAllCountries() {
       var countriesList = $("#country-selector");
       var populateCountries = function(res) {
@@ -273,6 +276,7 @@ shipment date is in the future. Use whatever CSS you feel.
       });
     }
 
+    //Success callback from the main search API, which is written below.
     function displayResults(res) {
 
       //Helper for checking if should display shipment date. Returns the date or "-", ready to be printed.
@@ -316,6 +320,7 @@ shipment date is in the future. Use whatever CSS you feel.
       })
     }
 
+    //API call function, with speciesIds of type Integer[] and countryCode of String.
     function querySpecies(speciesIds, countryCode) {
       var queryUrl = "api/search?species=" + speciesIds.join(",") + "&country=" + countryCode;
 
@@ -327,6 +332,7 @@ shipment date is in the future. Use whatever CSS you feel.
       });
     }
 
+    //When the Subtmi button is clicked, grab form data, format it and pass it to the querySpecies function.
     function handleSubmit(e) {
       e.preventDefault();
       var checkboxes = document.getElementsByName("species-list-item");
