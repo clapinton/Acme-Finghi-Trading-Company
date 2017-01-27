@@ -40,15 +40,15 @@ class SpeciesResults extends React.Component {
             <th>Next Shipment Date</th>
           </tr>
         
-          {keys(species).map( speciesId => (
-            <tr className="species-list" key={speciesId}>
+          {keys(species).map( inventoryId => (
+            <tr className="species-list" key={inventoryId}>
             
-              <td className="speciesInfo">{speciesId}</td>
-              <td className="speciesInfo">{species[speciesId].name}</td>
-              <td className="speciesInfo">{species[speciesId].latin_name}</td>
-              <td className="speciesInfo">{species[speciesId].country_name}</td>
+              <td className="speciesInfo">{species[inventoryId].id}</td>
+              <td className="speciesInfo">{species[inventoryId].name}</td>
+              <td className="speciesInfo">{species[inventoryId].latin_name}</td>
+              <td className="speciesInfo">{species[inventoryId].country_name}</td>
               <td className="speciesInfo">
-                {this.displayedShipmentDate(species[speciesId].inventory_count, species[speciesId].next_shipment_date)}
+                {this.displayedShipmentDate(species[inventoryId].inventory_count, species[inventoryId].next_shipment_date)}
               </td>
               
             </tr>
