@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20170124224227) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "countries", force: :cascade do |t|
     t.string   "country_name",  null: false
     t.string   "country_code2"
@@ -27,7 +30,7 @@ ActiveRecord::Schema.define(version: 20170124224227) do
     t.datetime "updated_at",         null: false
   end
 
-  add_index "species", ["species_latin_name"], name: "index_species_on_species_latin_name", unique: true
+  add_index "species", ["species_latin_name"], name: "index_species_on_species_latin_name", unique: true, using: :btree
 
   create_table "species_inventories", force: :cascade do |t|
     t.integer  "species_id",         null: false
