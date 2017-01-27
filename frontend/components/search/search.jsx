@@ -75,7 +75,6 @@ class SearchSpecies extends React.Component {
     //   if (this.state.selectedSpecies[id] === true ) return id
     // })).join(",");
     this.state.selectedSpecies.forEach( id => speciesQuery+= `${id},`);
-    console.log(speciesQuery);
 
     const queryUrl = `api/search?species=${speciesQuery}&country=${this.state.country}`;
 
