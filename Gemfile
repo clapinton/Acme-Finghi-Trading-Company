@@ -36,6 +36,10 @@ gem 'faker'
 
 gem 'rails_12factor'
 
+#Newrelic RPM
+gem 'newrelic_rpm'
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
