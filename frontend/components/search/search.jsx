@@ -89,6 +89,7 @@ class SearchSpecies extends React.Component {
   }
 
   render() {
+    // Looking back, I'd prefer to have split the checkboxes and dropdown to make a more modular form.
     return(
       <div>
         <h1>React</h1>
