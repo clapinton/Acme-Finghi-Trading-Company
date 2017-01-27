@@ -5,8 +5,8 @@
 **Finished:** Jan 23, 2017 - 13:17
 
 I could finish the whole quiz in 1.5 hours. I did, however, take advantage of the reqs detailed below and wrote a full stack app based on it, complete with seed data.
-You can check it here:
-[http://acme-finghi.clapinton.com/search](http://acme-finghi.clapinton.com/search)
+You can read more about it here:
+[https://github.com/clapinton/Acme-Finghi-Trading-Company/blob/master/acme-finghi-app.md](https://github.com/clapinton/Acme-Finghi-Trading-Company/blob/master/acme-finghi-app.md)
 
 
 I approached the quiz in the following order:

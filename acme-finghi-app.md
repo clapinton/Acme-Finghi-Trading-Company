@@ -12,8 +12,8 @@ You can reach the app at:
 
 You can add a `render` URL parameter to change the tech behind the page:
 
-`/search?render=jquery` will render the HTML built with vanilla JS ES5 and jQuery.
-`/search?render=react` or simply `/search` will render the page built using the React library and JS ES6.
+* `/search?render=jquery` will render the HTML built with vanilla JS ES5 and jQuery.
+* `/search?render=react` or simply `/search` will render the page built using the React library and JS ES6.
 
 Note that both pages will look the same, but the tech behind changes. I did not spend too much time on design
 
