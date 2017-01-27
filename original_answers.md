@@ -52,7 +52,7 @@ The table structure looks like this:
 ### SPECIES
 
 |Column|Constraints|Description|
-|-|-|-|
+|---|---|---|
 |species_id | INT, PK | Primary key |
 |species_latin_name | VARCHAR, UNIQUE | Latin name of the species such as “Anamita Muscaria”. |
 |species_name| VARCHAR, NOT NULL | Name of the species using a friendly name. For example, Agaricus bisporus, is called the “White Button Mushroom”.|
@@ -60,7 +60,7 @@ The table structure looks like this:
 ### COUNTRY
 
 |Column|Constraints|Description|
-|-|-|-|
+|---|---|---|
 |country_id | INT, PK | Primary key |
 |country_name | VARCHAR, NOT NULL | Name of country (e.g. United States, Japan, Italy) |
 |country_code2 | CHAR(2) | Two character country code (e.g. US, JP, IT) |
@@ -68,7 +68,7 @@ The table structure looks like this:
 ### SPECIES_INVENTORY
 
 |Column|Constraints|Description|
-|-|-|-|
+|---|---|---|
 |species_inventory_id | INT, PK | Primary key |
 |species_id | INT, FK species(species_id), NOT NULL| FK to species table.
 |country_id | INT, FK country(country_id), NOT NULL | Country of origin of this mushroom.
