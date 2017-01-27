@@ -50,6 +50,7 @@ inventory.
 The table structure looks like this:
 
 ### SPECIES
+
 |Column|Constraints|Description|
 |-|-|-|
 |species_id | INT, PK | Primary key |
@@ -57,6 +58,7 @@ The table structure looks like this:
 |species_name| VARCHAR, NOT NULL | Name of the species using a friendly name. For example, Agaricus bisporus, is called the “White Button Mushroom”.|
 
 ### COUNTRY
+
 |Column|Constraints|Description|
 |-|-|-|
 |country_id | INT, PK | Primary key |
@@ -64,6 +66,7 @@ The table structure looks like this:
 |country_code2 | CHAR(2) | Two character country code (e.g. US, JP, IT) |
 
 ### SPECIES_INVENTORY
+
 |Column|Constraints|Description|
 |-|-|-|
 |species_inventory_id | INT, PK | Primary key |
